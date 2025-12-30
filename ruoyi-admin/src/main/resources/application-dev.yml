@@ -15,8 +15,8 @@ ruoyi:
 
 # 微信配置
 wx:
-  appid: wxca5e7e129938e28e
-  secret: 08cfd2d69b7f4858ac646f74d20a00d2
+  appid: ***
+  secret: ***
 
 # 开发环境配置
 server:
