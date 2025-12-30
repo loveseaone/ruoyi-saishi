@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.activity.mapper.ActivityInfoMapper">
+    
+    <resultMap type="ActivityInfo" id="ActivityInfoResult">
+        <result property="activityId" column="activity_id"/>
+        <result property="activityName" column="activity_name"/>
+        <result property="activityDesc" column="activity_desc"/>
+        <result property="activityType" column="activity_type"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="status" column="status"/>
+        <result property="organizer" column="organizer"/>
+        <result property="contactInfo" column="contact_info"/>
+        <result property="location" column="location"/>
+        <result property="maxParticipants" column="max_participants"/>
+        <result property="currentParticipants" column="current_participants"/>
+        <result property="registrationStart" column="registration_start"/>
+        <result property="registrationEnd" column="registration_end"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    
+    <sql id="selectActivityInfoVo">
+        select activity_id, activity_name, activity_desc, activity_type, start_time, end_time, status, organizer, contact_info, location, max_participants, current_participants, registration_start, registration_end, create_by, create_time, update_by, update_time, remark from activity_info
+    </sql>
+    
+    <select id="selectActivityInfoList" parameterType="ActivityInfo" resultMap="ActivityInfoResult">
+        <include refid="selectActivityInfoVo"/>
+        <where>  
+            <if test="activityName != null  and activityName != ''"> and activity_name like concat('%', #{activityName}, '%')</if>
+            <if test="activityDesc != null  and activityDesc != ''"> and activity_desc = #{activityDesc}</if>
+            <if test="activityType != null  and activityType != ''"> and activity_type = #{activityType}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="organizer != null  and organizer != ''"> and organizer = #{organizer}</if>
+            <if test="contactInfo != null  and contactInfo != ''"> and contact_info = #{contactInfo}</if>
+            <if test="location != null  and location != ''"> and location = #{location}</if>
+            <if test="maxParticipants != null "> and max_participants = #{maxParticipants}</if>
+            <if test="currentParticipants != null "> and current_participants = #{currentParticipants}</if>
+            <if test="registrationStart != null "> and registration_start = #{registrationStart}</if>
+            <if test="registrationEnd != null "> and registration_end = #{registrationEnd}</if>
+        </where>
+    </select>
+    
+    <select id="selectActivityInfoByActivityId" parameterType="Long" resultMap="ActivityInfoResult">
+        <include refid="selectActivityInfoVo"/>
+        where activity_id = #{activityId}
+    </select>
+        
+    <insert id="insertActivityInfo" parameterType="ActivityInfo" useGeneratedKeys="true" keyProperty="activityId">
+        insert into activity_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activityName != null and activityName != ''">activity_name,</if>
+            <if test="activityDesc != null">activity_desc,</if>
+            <if test="activityType != null and activityType != ''">activity_type,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="status != null">status,</if>
+            <if test="organizer != null">organizer,</if>
+            <if test="contactInfo != null">contact_info,</if>
+            <if test="location != null">location,</if>
+            <if test="maxParticipants != null">max_participants,</if>
+            <if test="currentParticipants != null">current_participants,</if>
+            <if test="registrationStart != null">registration_start,</if>
+            <if test="registrationEnd != null">registration_end,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="activityName != null and activityName != ''">#{activityName},</if>
+            <if test="activityDesc != null">#{activityDesc},</if>
+            <if test="activityType != null and activityType != ''">#{activityType},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="organizer != null">#{organizer},</if>
+            <if test="contactInfo != null">#{contactInfo},</if>
+            <if test="location != null">#{location},</if>
+            <if test="maxParticipants != null">#{maxParticipants},</if>
+            <if test="currentParticipants != null">#{currentParticipants},</if>
+            <if test="registrationStart != null">#{registrationStart},</if>
+            <if test="registrationEnd != null">#{registrationEnd},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+     
+    <update id="updateActivityInfo" parameterType="ActivityInfo">
+        update activity_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="activityName != null and activityName != ''">activity_name = #{activityName},</if>
+            <if test="activityDesc != null">activity_desc = #{activityDesc},</if>
+            <if test="activityType != null and activityType != ''">activity_type = #{activityType},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="organizer != null">organizer = #{organizer},</if>
+            <if test="contactInfo != null">contact_info = #{contactInfo},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="maxParticipants != null">max_participants = #{maxParticipants},</if>
+            <if test="currentParticipants != null">current_participants = #{currentParticipants},</if>
+            <if test="registrationStart != null">registration_start = #{registrationStart},</if>
+            <if test="registrationEnd != null">registration_end = #{registrationEnd},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where activity_id = #{activityId}
+    </update>
+    
+    <delete id="deleteActivityInfoByActivityId" parameterType="Long">
+        delete from activity_info where activity_id = #{activityId}
+    </delete>
+    
+    <delete id="deleteActivityInfoByActivityIds" parameterType="String">
+        delete from activity_info where activity_id in 
+        <foreach item="activityId" collection="array" open="(" separator="," close=")">
+            #{activityId}
+        </foreach>
+    </delete>
+</mapper>

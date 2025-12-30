@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.activity.mapper.ActivityTeamsMapper">
+    
+    <resultMap type="ActivityTeams" id="ActivityTeamsResult">
+        <result property="teamId" column="team_id"/>
+        <result property="activityId" column="activity_id"/>
+        <result property="teamName" column="team_name"/>
+        <result property="status" column="status"/>
+        <result property="sort" column="sort"/>
+        <result property="groupCode" column="group_code"/>
+        <result property="displayOrder" column="display_order"/>
+        <result property="leaderName" column="leader_name"/>
+        <result property="leaderPhone" column="leader_phone"/>
+        <result property="coachName" column="coach_name"/>
+        <result property="unionContact" column="union_contact"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    
+    <sql id="selectActivityTeamsVo">
+        select team_id, activity_id, team_name, status, sort, group_code, display_order, leader_name, leader_phone, coach_name, union_contact, create_by, create_time, update_by, update_time, remark from activity_teams
+    </sql>
+    
+    <select id="selectActivityTeamsList" parameterType="ActivityTeams" resultMap="ActivityTeamsResult">
+        <include refid="selectActivityTeamsVo"/>
+        <where>  
+            <if test="activityId != null "> and activity_id = #{activityId}</if>
+            <if test="teamName != null  and teamName != ''"> and team_name like concat('%', #{teamName}, '%')</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="groupCode != null  and groupCode != ''"> and group_code = #{groupCode}</if>
+            <if test="displayOrder != null "> and display_order = #{displayOrder}</if>
+            <if test="leaderName != null  and leaderName != ''"> and leader_name = #{leaderName}</if>
+            <if test="leaderPhone != null  and leaderPhone != ''"> and leader_phone = #{leaderPhone}</if>
+            <if test="coachName != null  and coachName != ''"> and coach_name = #{coachName}</if>
+            <if test="unionContact != null  and unionContact != ''"> and union_contact = #{unionContact}</if>
+        </where>
+    </select>
+    
+    <select id="selectActivityTeamsByTeamId" parameterType="Long" resultMap="ActivityTeamsResult">
+        <include refid="selectActivityTeamsVo"/>
+        where team_id = #{teamId}
+    </select>
+        
+    <insert id="insertActivityTeams" parameterType="ActivityTeams" useGeneratedKeys="true" keyProperty="teamId">
+        insert into activity_teams
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">activity_id,</if>
+            <if test="teamName != null and teamName != ''">team_name,</if>
+            <if test="status != null">status,</if>
+            <if test="sort != null">sort,</if>
+            <if test="groupCode != null">group_code,</if>
+            <if test="displayOrder != null">display_order,</if>
+            <if test="leaderName != null">leader_name,</if>
+            <if test="leaderPhone != null">leader_phone,</if>
+            <if test="coachName != null">coach_name,</if>
+            <if test="unionContact != null">union_contact,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">#{activityId},</if>
+            <if test="teamName != null and teamName != ''">#{teamName},</if>
+            <if test="status != null">#{status},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="groupCode != null">#{groupCode},</if>
+            <if test="displayOrder != null">#{displayOrder},</if>
+            <if test="leaderName != null">#{leaderName},</if>
+            <if test="leaderPhone != null">#{leaderPhone},</if>
+            <if test="coachName != null">#{coachName},</if>
+            <if test="unionContact != null">#{unionContact},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+     
+    <update id="updateActivityTeams" parameterType="ActivityTeams">
+        update activity_teams
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="activityId != null">activity_id = #{activityId},</if>
+            <if test="teamName != null and teamName != ''">team_name = #{teamName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="groupCode != null">group_code = #{groupCode},</if>
+            <if test="displayOrder != null">display_order = #{displayOrder},</if>
+            <if test="leaderName != null">leader_name = #{leaderName},</if>
+            <if test="leaderPhone != null">leader_phone = #{leaderPhone},</if>
+            <if test="coachName != null">coach_name = #{coachName},</if>
+            <if test="unionContact != null">union_contact = #{unionContact},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where team_id = #{teamId}
+    </update>
+    
+    <delete id="deleteActivityTeamsByTeamId" parameterType="Long">
+        delete from activity_teams where team_id = #{teamId}
+    </delete>
+    
+    <delete id="deleteActivityTeamsByTeamIds" parameterType="String">
+        delete from activity_teams where team_id in 
+        <foreach item="teamId" collection="array" open="(" separator="," close=")">
+            #{teamId}
+        </foreach>
+    </delete>
+</mapper>

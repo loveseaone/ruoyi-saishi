@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.activity.mapper.ActivityRegistrationMapper">
+    
+    <resultMap type="ActivityRegistration" id="ActivityRegistrationResult">
+        <result property="regId" column="reg_id"/>
+        <result property="activityId" column="activity_id"/>
+        <result property="participantName" column="participant_name"/>
+        <result property="participantPhone" column="participant_phone"/>
+        <result property="participantEmail" column="participant_email"/>
+        <result property="participantOrg" column="participant_org"/>
+        <result property="registrationTime" column="registration_time"/>
+        <result property="status" column="status"/>
+        <result property="checkinStatus" column="checkin_status"/>
+        <result property="checkinTime" column="checkin_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    
+    <sql id="selectActivityRegistrationVo">
+        select reg_id, activity_id, participant_name, participant_phone, participant_email, participant_org, registration_time, status, checkin_status, checkin_time, create_by, create_time, update_by, update_time, remark from activity_registration
+    </sql>
+    
+    <select id="selectActivityRegistrationList" parameterType="ActivityRegistration" resultMap="ActivityRegistrationResult">
+        <include refid="selectActivityRegistrationVo"/>
+        <where>  
+            <if test="activityId != null "> and activity_id = #{activityId}</if>
+            <if test="participantName != null  and participantName != ''"> and participant_name like concat('%', #{participantName}, '%')</if>
+            <if test="participantPhone != null  and participantPhone != ''"> and participant_phone = #{participantPhone}</if>
+            <if test="participantEmail != null  and participantEmail != ''"> and participant_email = #{participantEmail}</if>
+            <if test="participantOrg != null  and participantOrg != ''"> and participant_org = #{participantOrg}</if>
+            <if test="registrationTime != null "> and registration_time = #{registrationTime}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="checkinStatus != null "> and checkin_status = #{checkinStatus}</if>
+            <if test="checkinTime != null "> and checkin_time = #{checkinTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectActivityRegistrationByRegId" parameterType="Long" resultMap="ActivityRegistrationResult">
+        <include refid="selectActivityRegistrationVo"/>
+        where reg_id = #{regId}
+    </select>
+        
+    <insert id="insertActivityRegistration" parameterType="ActivityRegistration" useGeneratedKeys="true" keyProperty="regId">
+        insert into activity_registration
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">activity_id,</if>
+            <if test="participantName != null and participantName != ''">participant_name,</if>
+            <if test="participantPhone != null">participant_phone,</if>
+            <if test="participantEmail != null">participant_email,</if>
+            <if test="participantOrg != null">participant_org,</if>
+            <if test="registrationTime != null">registration_time,</if>
+            <if test="status != null">status,</if>
+            <if test="checkinStatus != null">checkin_status,</if>
+            <if test="checkinTime != null">checkin_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">#{activityId},</if>
+            <if test="participantName != null and participantName != ''">#{participantName},</if>
+            <if test="participantPhone != null">#{participantPhone},</if>
+            <if test="participantEmail != null">#{participantEmail},</if>
+            <if test="participantOrg != null">#{participantOrg},</if>
+            <if test="registrationTime != null">#{registrationTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="checkinStatus != null">#{checkinStatus},</if>
+            <if test="checkinTime != null">#{checkinTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+     
+    <update id="updateActivityRegistration" parameterType="ActivityRegistration">
+        update activity_registration
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="activityId != null">activity_id = #{activityId},</if>
+            <if test="participantName != null and participantName != ''">participant_name = #{participantName},</if>
+            <if test="participantPhone != null">participant_phone = #{participantPhone},</if>
+            <if test="participantEmail != null">participant_email = #{participantEmail},</if>
+            <if test="participantOrg != null">participant_org = #{participantOrg},</if>
+            <if test="registrationTime != null">registration_time = #{registrationTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="checkinStatus != null">checkin_status = #{checkinStatus},</if>
+            <if test="checkinTime != null">checkin_time = #{checkinTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where reg_id = #{regId}
+    </update>
+    
+    <delete id="deleteActivityRegistrationByRegId" parameterType="Long">
+        delete from activity_registration where reg_id = #{regId}
+    </delete>
+    
+    <delete id="deleteActivityRegistrationByRegIds" parameterType="String">
+        delete from activity_registration where reg_id in 
+        <foreach item="regId" collection="array" open="(" separator="," close=")">
+            #{regId}
+        </foreach>
+    </delete>
+</mapper>

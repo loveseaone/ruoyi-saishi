@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.activity.mapper.ActivityNoticesMapper">
+    
+    <resultMap type="ActivityNotices" id="ActivityNoticesResult">
+        <result property="noticeId" column="notice_id"/>
+        <result property="activityId" column="activity_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="publishedAt" column="published_at"/>
+        <result property="isPinned" column="is_pinned"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    
+    <sql id="selectActivityNoticesVo">
+        select notice_id, activity_id, title, content, published_at, is_pinned, create_by, create_time, update_by, update_time, remark from activity_notices
+    </sql>
+    
+    <select id="selectActivityNoticesList" parameterType="ActivityNotices" resultMap="ActivityNoticesResult">
+        <include refid="selectActivityNoticesVo"/>
+        <where>  
+            <if test="activityId != null "> and activity_id = #{activityId}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="publishedAt != null "> and published_at = #{publishedAt}</if>
+            <if test="isPinned != null "> and is_pinned = #{isPinned}</if>
+        </where>
+    </select>
+    
+    <select id="selectActivityNoticesByNoticeId" parameterType="Long" resultMap="ActivityNoticesResult">
+        <include refid="selectActivityNoticesVo"/>
+        where notice_id = #{noticeId}
+    </select>
+        
+    <insert id="insertActivityNotices" parameterType="ActivityNotices" useGeneratedKeys="true" keyProperty="noticeId">
+        insert into activity_notices
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">activity_id,</if>
+            <if test="title != null">title,</if>
+            <if test="content != null">content,</if>
+            <if test="publishedAt != null">published_at,</if>
+            <if test="isPinned != null">is_pinned,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">#{activityId},</if>
+            <if test="title != null">#{title},</if>
+            <if test="content != null">#{content},</if>
+            <if test="publishedAt != null">#{publishedAt},</if>
+            <if test="isPinned != null">#{isPinned},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+     
+    <update id="updateActivityNotices" parameterType="ActivityNotices">
+        update activity_notices
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="activityId != null">activity_id = #{activityId},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="publishedAt != null">published_at = #{publishedAt},</if>
+            <if test="isPinned != null">is_pinned = #{isPinned},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where notice_id = #{noticeId}
+    </update>
+    
+    <delete id="deleteActivityNoticesByNoticeId" parameterType="Long">
+        delete from activity_notices where notice_id = #{noticeId}
+    </delete>
+    
+    <delete id="deleteActivityNoticesByNoticeIds" parameterType="String">
+        delete from activity_notices where notice_id in 
+        <foreach item="noticeId" collection="array" open="(" separator="," close=")">
+            #{noticeId}
+        </foreach>
+    </delete>
+</mapper>

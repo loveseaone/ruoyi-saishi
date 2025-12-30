@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.activity.mapper.ActivityStandingsMapper">
+    
+    <resultMap type="ActivityStandings" id="ActivityStandingsResult">
+        <result property="standingId" column="standing_id"/>
+        <result property="activityId" column="activity_id"/>
+        <result property="teamId" column="team_id"/>
+        <result property="groupCode" column="group_code"/>
+        <result property="matchesPlayed" column="matches_played"/>
+        <result property="wins" column="wins"/>
+        <result property="losses" column="losses"/>
+        <result property="points" column="points"/>
+        <result property="setsWon" column="sets_won"/>
+        <result property="setsLost" column="sets_lost"/>
+        <result property="pointsFor" column="points_for"/>
+        <result property="pointsAgainst" column="points_against"/>
+        <result property="cValue" column="c_value"/>
+        <result property="zValue" column="z_value"/>
+        <result property="rankInGroup" column="rank_in_group"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    
+    <sql id="selectActivityStandingsVo">
+        select standing_id, activity_id, team_id, group_code, matches_played, wins, losses, points, sets_won, sets_lost, points_for, points_against, c_value, z_value, rank_in_group, create_by, create_time, update_by, update_time, remark from activity_standings
+    </sql>
+    
+    <select id="selectActivityStandingsList" parameterType="ActivityStandings" resultMap="ActivityStandingsResult">
+        <include refid="selectActivityStandingsVo"/>
+        <where>  
+            <if test="activityId != null "> and activity_id = #{activityId}</if>
+            <if test="teamId != null "> and team_id = #{teamId}</if>
+            <if test="groupCode != null  and groupCode != ''"> and group_code = #{groupCode}</if>
+            <if test="matchesPlayed != null "> and matches_played = #{matchesPlayed}</if>
+            <if test="wins != null "> and wins = #{wins}</if>
+            <if test="losses != null "> and losses = #{losses}</if>
+            <if test="points != null "> and points = #{points}</if>
+            <if test="setsWon != null "> and sets_won = #{setsWon}</if>
+            <if test="setsLost != null "> and sets_lost = #{setsLost}</if>
+            <if test="pointsFor != null "> and points_for = #{pointsFor}</if>
+            <if test="pointsAgainst != null "> and points_against = #{pointsAgainst}</if>
+            <if test="cValue != null "> and c_value = #{cValue}</if>
+            <if test="zValue != null "> and z_value = #{zValue}</if>
+            <if test="rankInGroup != null "> and rank_in_group = #{rankInGroup}</if>
+        </where>
+    </select>
+    
+    <select id="selectActivityStandingsByStandingId" parameterType="Long" resultMap="ActivityStandingsResult">
+        <include refid="selectActivityStandingsVo"/>
+        where standing_id = #{standingId}
+    </select>
+        
+    <insert id="insertActivityStandings" parameterType="ActivityStandings" useGeneratedKeys="true" keyProperty="standingId">
+        insert into activity_standings
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">activity_id,</if>
+            <if test="teamId != null">team_id,</if>
+            <if test="groupCode != null">group_code,</if>
+            <if test="matchesPlayed != null">matches_played,</if>
+            <if test="wins != null">wins,</if>
+            <if test="losses != null">losses,</if>
+            <if test="points != null">points,</if>
+            <if test="setsWon != null">sets_won,</if>
+            <if test="setsLost != null">sets_lost,</if>
+            <if test="pointsFor != null">points_for,</if>
+            <if test="pointsAgainst != null">points_against,</if>
+            <if test="rankInGroup != null">rank_in_group,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">#{activityId},</if>
+            <if test="teamId != null">#{teamId},</if>
+            <if test="groupCode != null">#{groupCode},</if>
+            <if test="matchesPlayed != null">#{matchesPlayed},</if>
+            <if test="wins != null">#{wins},</if>
+            <if test="losses != null">#{losses},</if>
+            <if test="points != null">#{points},</if>
+            <if test="setsWon != null">#{setsWon},</if>
+            <if test="setsLost != null">#{setsLost},</if>
+            <if test="pointsFor != null">#{pointsFor},</if>
+            <if test="pointsAgainst != null">#{pointsAgainst},</if>
+            <if test="rankInGroup != null">#{rankInGroup},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+     
+    <update id="updateActivityStandings" parameterType="ActivityStandings">
+        update activity_standings
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="activityId != null">activity_id = #{activityId},</if>
+            <if test="teamId != null">team_id = #{teamId},</if>
+            <if test="groupCode != null">group_code = #{groupCode},</if>
+            <if test="matchesPlayed != null">matches_played = #{matchesPlayed},</if>
+            <if test="wins != null">wins = #{wins},</if>
+            <if test="losses != null">losses = #{losses},</if>
+            <if test="points != null">points = #{points},</if>
+            <if test="setsWon != null">sets_won = #{setsWon},</if>
+            <if test="setsLost != null">sets_lost = #{setsLost},</if>
+            <if test="pointsFor != null">points_for = #{pointsFor},</if>
+            <if test="pointsAgainst != null">points_against = #{pointsAgainst},</if>
+            <if test="rankInGroup != null">rank_in_group = #{rankInGroup},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where standing_id = #{standingId}
+    </update>
+    
+    <delete id="deleteActivityStandingsByStandingId" parameterType="Long">
+        delete from activity_standings where standing_id = #{standingId}
+    </delete>
+    
+    <delete id="deleteActivityStandingsByStandingIds" parameterType="String">
+        delete from activity_standings where standing_id in 
+        <foreach item="standingId" collection="array" open="(" separator="," close=")">
+            #{standingId}
+        </foreach>
+    </delete>
+</mapper>

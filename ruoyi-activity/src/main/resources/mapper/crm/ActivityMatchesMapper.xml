@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.activity.mapper.ActivityMatchesMapper">
+    
+    <resultMap type="ActivityMatches" id="ActivityMatchesResult">
+        <result property="matchId" column="match_id"/>
+        <result property="activityId" column="activity_id"/>
+        <result property="matchCode" column="match_code"/>
+        <result property="stage" column="stage"/>
+        <result property="format" column="format"/>
+        <result property="roundDesc" column="round_desc"/>
+        <result property="groupA" column="group_a"/>
+        <result property="rankA" column="rank_a"/>
+        <result property="groupB" column="group_b"/>
+        <result property="rankB" column="rank_b"/>
+        <result property="teamAId" column="team_a_id"/>
+        <result property="teamBId" column="team_b_id"/>
+        <result property="court" column="court"/>
+        <result property="matchDate" column="match_date"/>
+        <result property="startTime" column="start_time"/>
+        <result property="status" column="status"/>
+        <result property="scoreASet1" column="score_a_set1"/>
+        <result property="scoreBSet1" column="score_b_set1"/>
+        <result property="scoreASet2" column="score_a_set2"/>
+        <result property="scoreBSet2" column="score_b_set2"/>
+        <result property="scoreASet3" column="score_a_set3"/>
+        <result property="scoreBSet3" column="score_b_set3"/>
+        <result property="scoreASet4" column="score_a_set4"/>
+        <result property="scoreBSet4" column="score_b_set4"/>
+        <result property="scoreASet5" column="score_a_set5"/>
+        <result property="scoreBSet5" column="score_b_set5"/>
+        <result property="winnerId" column="winner_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    
+    <sql id="selectActivityMatchesVo">
+        select match_id, activity_id, match_code, stage, format, round_desc, group_a, rank_a, group_b, rank_b, team_a_id, team_b_id, court, match_date, start_time, status, score_a_set1, score_b_set1, score_a_set2, score_b_set2, score_a_set3, score_b_set3, score_a_set4, score_b_set4, score_a_set5, score_b_set5, winner_id, create_by, create_time, update_by, update_time, remark from activity_matches
+    </sql>
+    
+    <select id="selectActivityMatchesList" parameterType="ActivityMatches" resultMap="ActivityMatchesResult">
+        <include refid="selectActivityMatchesVo"/>
+        <where>  
+            <if test="activityId != null "> and activity_id = #{activityId}</if>
+            <if test="matchCode != null  and matchCode != ''"> and match_code = #{matchCode}</if>
+            <if test="stage != null "> and stage = #{stage}</if>
+            <if test="format != null "> and format = #{format}</if>
+            <if test="roundDesc != null  and roundDesc != ''"> and round_desc = #{roundDesc}</if>
+            <if test="groupA != null  and groupA != ''"> and group_a = #{groupA}</if>
+            <if test="rankA != null "> and rank_a = #{rankA}</if>
+            <if test="groupB != null  and groupB != ''"> and group_b = #{groupB}</if>
+            <if test="rankB != null "> and rank_b = #{rankB}</if>
+            <if test="teamAId != null "> and team_a_id = #{teamAId}</if>
+            <if test="teamBId != null "> and team_b_id = #{teamBId}</if>
+            <if test="court != null "> and court = #{court}</if>
+            <if test="matchDate != null "> and match_date = #{matchDate}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="scoreASet1 != null "> and score_a_set1 = #{scoreASet1}</if>
+            <if test="scoreBSet1 != null "> and score_b_set1 = #{scoreBSet1}</if>
+            <if test="scoreASet2 != null "> and score_a_set2 = #{scoreASet2}</if>
+            <if test="scoreBSet2 != null "> and score_b_set2 = #{scoreBSet2}</if>
+            <if test="scoreASet3 != null "> and score_a_set3 = #{scoreASet3}</if>
+            <if test="scoreBSet3 != null "> and score_b_set3 = #{scoreBSet3}</if>
+            <if test="scoreASet4 != null "> and score_a_set4 = #{scoreASet4}</if>
+            <if test="scoreBSet4 != null "> and score_b_set4 = #{scoreBSet4}</if>
+            <if test="scoreASet5 != null "> and score_a_set5 = #{scoreASet5}</if>
+            <if test="scoreBSet5 != null "> and score_b_set5 = #{scoreBSet5}</if>
+            <if test="winnerId != null "> and winner_id = #{winnerId}</if>
+        </where>
+    </select>
+    
+    <select id="selectActivityMatchesByMatchId" parameterType="Long" resultMap="ActivityMatchesResult">
+        <include refid="selectActivityMatchesVo"/>
+        where match_id = #{matchId}
+    </select>
+        
+    <insert id="insertActivityMatches" parameterType="ActivityMatches" useGeneratedKeys="true" keyProperty="matchId">
+        insert into activity_matches
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">activity_id,</if>
+            <if test="matchCode != null">match_code,</if>
+            <if test="stage != null">stage,</if>
+            <if test="format != null">format,</if>
+            <if test="roundDesc != null">round_desc,</if>
+            <if test="groupA != null">group_a,</if>
+            <if test="rankA != null">rank_a,</if>
+            <if test="groupB != null">group_b,</if>
+            <if test="rankB != null">rank_b,</if>
+            <if test="teamAId != null">team_a_id,</if>
+            <if test="teamBId != null">team_b_id,</if>
+            <if test="court != null">court,</if>
+            <if test="matchDate != null">match_date,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="status != null">status,</if>
+            <if test="scoreASet1 != null">score_a_set1,</if>
+            <if test="scoreBSet1 != null">score_b_set1,</if>
+            <if test="scoreASet2 != null">score_a_set2,</if>
+            <if test="scoreBSet2 != null">score_b_set2,</if>
+            <if test="scoreASet3 != null">score_a_set3,</if>
+            <if test="scoreBSet3 != null">score_b_set3,</if>
+            <if test="scoreASet4 != null">score_a_set4,</if>
+            <if test="scoreBSet4 != null">score_b_set4,</if>
+            <if test="scoreASet5 != null">score_a_set5,</if>
+            <if test="scoreBSet5 != null">score_b_set5,</if>
+            <if test="winnerId != null">winner_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">#{activityId},</if>
+            <if test="matchCode != null">#{matchCode},</if>
+            <if test="stage != null">#{stage},</if>
+            <if test="format != null">#{format},</if>
+            <if test="roundDesc != null">#{roundDesc},</if>
+            <if test="groupA != null">#{groupA},</if>
+            <if test="rankA != null">#{rankA},</if>
+            <if test="groupB != null">#{groupB},</if>
+            <if test="rankB != null">#{rankB},</if>
+            <if test="teamAId != null">#{teamAId},</if>
+            <if test="teamBId != null">#{teamBId},</if>
+            <if test="court != null">#{court},</if>
+            <if test="matchDate != null">#{matchDate},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="scoreASet1 != null">#{scoreASet1},</if>
+            <if test="scoreBSet1 != null">#{scoreBSet1},</if>
+            <if test="scoreASet2 != null">#{scoreASet2},</if>
+            <if test="scoreBSet2 != null">#{scoreBSet2},</if>
+            <if test="scoreASet3 != null">#{scoreASet3},</if>
+            <if test="scoreBSet3 != null">#{scoreBSet3},</if>
+            <if test="scoreASet4 != null">#{scoreASet4},</if>
+            <if test="scoreBSet4 != null">#{scoreBSet4},</if>
+            <if test="scoreASet5 != null">#{scoreASet5},</if>
+            <if test="scoreBSet5 != null">#{scoreBSet5},</if>
+            <if test="winnerId != null">#{winnerId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+     
+    <update id="updateActivityMatches" parameterType="ActivityMatches">
+        update activity_matches
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="activityId != null">activity_id = #{activityId},</if>
+            <if test="matchCode != null">match_code = #{matchCode},</if>
+            <if test="stage != null">stage = #{stage},</if>
+            <if test="format != null">format = #{format},</if>
+            <if test="roundDesc != null">round_desc = #{roundDesc},</if>
+            <if test="groupA != null">group_a = #{groupA},</if>
+            <if test="rankA != null">rank_a = #{rankA},</if>
+            <if test="groupB != null">group_b = #{groupB},</if>
+            <if test="rankB != null">rank_b = #{rankB},</if>
+            <if test="teamAId != null">team_a_id = #{teamAId},</if>
+            <if test="teamBId != null">team_b_id = #{teamBId},</if>
+            <if test="court != null">court = #{court},</if>
+            <if test="matchDate != null">match_date = #{matchDate},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="scoreASet1 != null">score_a_set1 = #{scoreASet1},</if>
+            <if test="scoreBSet1 != null">score_b_set1 = #{scoreBSet1},</if>
+            <if test="scoreASet2 != null">score_a_set2 = #{scoreASet2},</if>
+            <if test="scoreBSet2 != null">score_b_set2 = #{scoreBSet2},</if>
+            <if test="scoreASet3 != null">score_a_set3 = #{scoreASet3},</if>
+            <if test="scoreBSet3 != null">score_b_set3 = #{scoreBSet3},</if>
+            <if test="scoreASet4 != null">score_a_set4 = #{scoreASet4},</if>
+            <if test="scoreBSet4 != null">score_b_set4 = #{scoreBSet4},</if>
+            <if test="scoreASet5 != null">score_a_set5 = #{scoreASet5},</if>
+            <if test="scoreBSet5 != null">score_b_set5 = #{scoreBSet5},</if>
+            <if test="winnerId != null">winner_id = #{winnerId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where match_id = #{matchId}
+    </update>
+    
+    <delete id="deleteActivityMatchesByMatchId" parameterType="Long">
+        delete from activity_matches where match_id = #{matchId}
+    </delete>
+    
+    <delete id="deleteActivityMatchesByMatchIds" parameterType="String">
+        delete from activity_matches where match_id in 
+        <foreach item="matchId" collection="array" open="(" separator="," close=")">
+            #{matchId}
+        </foreach>
+    </delete>
+</mapper>
